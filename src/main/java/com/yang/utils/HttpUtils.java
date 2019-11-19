@@ -8,9 +8,11 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
+import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
+import java.util.UUID;
+
 
 public class HttpUtils {
 
@@ -80,11 +82,22 @@ public class HttpUtils {
             if(response.getStatusLine().getStatusCode()==200){
                 if(response.getEntity()!=null){
 
+                    //获取图片的后缀
+                    String extName=url.substring(url.lastIndexOf("."));
+
+                    //创建图片名,重命名图片
+                    String picName=UUID.randomUUID().toString()+extName;
+
+                    //声明OutPutStream
+                    OutputStream outputStream=new FileOutputStream(new File("E:\\images"+picName));
+
+                    //写入
+                    response.getEntity().writeTo(outputStream);
+
+                    //返回图片名字
+                    return picName;
 
 
-//                    OutputStream outputStream=new FileOutputStream();
-////
-////                    response.getEntity().writeTo();
                 }
 
             }
