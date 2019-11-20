@@ -35,6 +35,11 @@ public class HttpUtils {
         //2,输入网址,发起get请求创建httpGet对象
         HttpGet httpGet = new HttpGet(url);
 
+        httpGet.setHeader("Accept","application/json, text/javascript, */*; q=0.01");
+        httpGet.setHeader("Accept", "https//www.lagou.com/jobs/list_%E6%A3%AE%E6%9E%9C?labelWords=&fromSearch=true&suginput=");
+        httpGet.setHeader( "User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36");
+
+
         CloseableHttpResponse response=null;
 
         try {
@@ -89,7 +94,7 @@ public class HttpUtils {
                     String picName=UUID.randomUUID().toString()+extName;
 
                     //声明OutPutStream
-                    OutputStream outputStream=new FileOutputStream(new File("E:\\images"+picName));
+                    OutputStream outputStream=new FileOutputStream(new File("E:\\images\\"+picName));
 
                     //写入
                     response.getEntity().writeTo(outputStream);
@@ -105,7 +110,11 @@ public class HttpUtils {
             e.printStackTrace();
         }finally {
             try {
-                response.close();
+
+                if(response!=null){
+                    response.close();
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
